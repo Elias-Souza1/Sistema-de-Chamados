@@ -1,0 +1,98 @@
+{
+  "users": [
+    {
+      "user_id": 4,
+      "full_name": "gianinaodefaltas",
+      "email": "giani@gmail.com",
+      "password": "0102",
+      "is_active": 1,
+      "created_at": "2025-09-24T23:12:28.797Z"
+    },
+    {
+      "user_id": 3,
+      "full_name": "maiamy",
+      "email": "maiamy@gmail.com",
+      "password": "001",
+      "is_active": 1,
+      "created_at": "2025-09-24T22:55:32.009Z"
+    },
+    {
+      "user_id": 2,
+      "full_name": "LE Alessandro",
+      "email": "alessandro@gmail.com",
+      "password": "123456",
+      "is_active": 1,
+      "created_at": "2025-09-23T23:14:10.243Z"
+    },
+    {
+      "user_id": 1,
+      "full_name": "Admin",
+      "email": "admin@local",
+      "password": "123456",
+      "is_active": 1,
+      "created_at": "2025-09-23T23:01:04.929Z"
+    }
+  ],
+  "roles": [
+    "USUARIO",
+    "AGENTE",
+    "ADMIN"
+  ],
+  "permissions": [
+    "users.read",
+    "users.write",
+    "tickets.read",
+    "tickets.write",
+    "admin.panel"
+  ],
+  "userRoles": {
+    "1": [
+      "ADMIN"
+    ],
+    "2": [
+      "AGENTE"
+    ],
+    "3": [
+      "AGENTE"
+    ],
+    "4": [
+      "AGENTE"
+    ]
+  },
+  "userPerms": {
+    "1": [
+      "users.read",
+      "users.write",
+      "tickets.read",
+      "tickets.write",
+      "admin.panel"
+    ],
+    "2": [
+      "tickets.read",
+      "users.write",
+      "tickets.write"
+    ],
+    "3": [
+      "tickets.read",
+      "tickets.write"
+    ],
+    "4": [
+      "tickets.read",
+      "tickets.write",
+      "users.write"
+    ]
+  },
+  "nextUserId": 5,
+  "tickets": [
+    {
+      "ticket_id": 1,
+      "subject": "teste",
+      "description": "alo",
+      "opened_by": 1,
+      "assigned_to": null,
+      "status": "Aberto",
+      "priority": "Média",
+      "created_at": "2025-09-24T23:13:59.923Z"
+    }
+  ]
+}

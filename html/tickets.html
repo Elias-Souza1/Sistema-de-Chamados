@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tickets</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="menu-top">
+      <a href="./inicial.html"><i class="bi bi-house-door-fill"></i><span>Início</span></a>
+      <a href="./chamados.html"><i class="bi bi-journal-text"></i><span>Chamados</span></a>
+      <a href="./tickets.html" class="active"><i class="bi bi-ticket-detailed-fill"></i><span>Tickets</span></a>
+      <a href="./indicador.html"><i class="bi bi-bar-chart-fill"></i><span>Indicadores</span></a>
+      <a href="./chat.html"><i class="bi bi-chat-dots-fill"></i><span>Chat</span></a>
+    </div>
+    <div class="menu-bottom">
+      <a href="./settings.html"><i class="bi bi-gear-fill"></i><span>Configurações</span></a>
+      <a href="#" id="logoutLink"><i class="bi bi-box-arrow-right"></i><span>Sair</span></a>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="top-bar">
+      <div class="user-profile"><img src="https://i.pravatar.cc/150?img=3" alt="Foto do usuário"></div>
+    </div>
+    <div class="tickets-container">
+      <h2>Tickets</h2>
+      <div class="filters">
+        <select id="filterStatus">
+          <option value="">Todos os Status</option>
+          <option value="Aberto">Aberto</option>
+          <option value="Em andamento">Em andamento</option>
+          <option value="Fechado">Fechado</option>
+        </select>
+        <select id="filterPrioridade">
+          <option value="">Todas as Prioridades</option>
+          <option value="Alta">Alta</option>
+          <option value="Média">Média</option>
+          <option value="Baixa">Baixa</option>
+        </select>
+        <select id="filterResponsavel">
+          <option value="">Todos os Responsáveis</option>
+          <option value="João">João</option>
+          <option value="Maria">Maria</option>
+          <option value="Carlos">Carlos</option>
+        </select>
+        <input type="text" id="searchAssunto" placeholder="Pesquisar por assunto...">
+      </div>
+
+      <table id="tabelaTickets" data-enhanced="1">
+        <thead>
+          <tr>
+            <th>ID</th><th>Assunto</th><th>Status</th><th>Responsável</th><th>Prioridade</th><th>Data de abertura</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>#1001</td><td>Erro na emissão de boleto</td><td>Aberto</td><td>João</td><td>Alta</td><td>19/08/2025</td></tr>
+          <tr><td>#1002</td><td>Atualização de plano</td><td>Em andamento</td><td>Maria</td><td>Média</td><td>18/08/2025</td></tr>
+          <tr><td>#1003</td><td>Solicitação de reembolso</td><td>Fechado</td><td>Carlos</td><td>Baixa</td><td>15/08/2025</td></tr>
+          <tr><td>#1004</td><td>Problema de acesso ao sistema</td><td>Aberto</td><td>João</td><td>Média</td><td>12/08/2025</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- guard: mantém regra de páginas públicas/ADMIN -->
+  <script src="../js/guard.js"></script>
+
+  <!-- bridge: cria a sessão esperada pelo core.js a partir do login do backend -->
+  <script>
+    (function(){
+      try {
+        // lê dados do login do backend
+        var sessUserStr = sessionStorage.getItem('user') || localStorage.getItem('user');
+        if (!sessUserStr) return;
+        var sessUser = JSON.parse(sessUserStr || "null");
+        if (!sessUser || !sessUser.email) return;
+
+        var email = String(sessUser.email).toLowerCase();
+        var rolesArr;
+        try { rolesArr = JSON.parse(sessionStorage.getItem('roles') || localStorage.getItem('roles') || "[]"); } catch { rolesArr = []; }
+        var role = rolesArr.includes('ADMIN') ? 'ADMIN' : (rolesArr.includes('AGENTE') ? 'AGENTE' : 'USUARIO');
+
+        // prepara storage usado pelo core.js
+        var STORE_USERS = 'sc_users';
+        var STORE_SESSION = 'sc_session';
+
+        var list = [];
+        try { list = JSON.parse(localStorage.getItem(STORE_USERS) || "[]"); } catch { list = []; }
+
+        // procura usuário local por e-mail
+        var u = list.find(function(x){ return (x && x.email || '').toLowerCase() === email; });
+
+        if (!u) {
+          // cria usuário local compatível com core.js
+          var genId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+          u = {
+            id: genId,
+            name: sessUser.full_name || (email.split("@")[0]),
+            email: email,
+            pass: "", // não usado pelo core neste fluxo
+            role: role,
+            grants: { assignOthers:false, respondOthers:false, reassignTickets:false, manageUsers:false, changeRoles:false }
+          };
+          list.push(u);
+          localStorage.setItem(STORE_USERS, JSON.stringify(list));
+        } else {
+          // sincroniza nome/role
+          u.name = sessUser.full_name || u.name;
+          u.role = role || u.role;
+          localStorage.setItem(STORE_USERS, JSON.stringify(list));
+        }
+
+        // seta sessão que o core.js exige
+        sessionStorage.setItem(STORE_SESSION, JSON.stringify({ uid: u.id, when: Date.now() }));
+      } catch(e) {
+        // silencia para não quebrar a página
+      }
+    })();
+  </script>
+
+  <!-- demais scripts na ordem original -->
+  <script src="../js/core.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/tickets.js"></script>
+</body>
+</html>

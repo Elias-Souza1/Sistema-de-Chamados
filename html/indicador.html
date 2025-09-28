@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Indicadores</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="menu-top">
+      <a href="./inicial.html"><i class="bi bi-house-door-fill"></i><span>Início</span></a>
+      <a href="./chamados.html"><i class="bi bi-journal-text"></i><span>Chamados</span></a>
+      <a href="./tickets.html"><i class="bi bi-ticket-detailed-fill"></i><span>Tickets</span></a>
+      <a href="./indicador.html" class="active"><i class="bi bi-bar-chart-fill"></i><span>Indicadores</span></a>
+      <a href="./chat.html"><i class="bi bi-chat-dots-fill"></i><span>Chat</span></a>
+    </div>
+    <div class="menu-bottom">
+      <a href="./html/settings.html"><i class="bi bi-gear-fill"></i><span>Configurações</span></a>
+      <a href="#" id="logoutLink"><i class="bi bi-box-arrow-right"></i><span>Sair</span></a>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="top-bar">
+      <div class="user-profile"><img src="https://i.pravatar.cc/150?img=3" alt="Foto do usuário"></div>
+    </div>
+
+    <div class="main-message">
+      <div class="welcome-text">Dashboard</div>
+      <p>Acompanhe os indicadores de chamados do sistema.</p>
+    </div>
+
+    <div class="cards" style="display: flex; gap: 20px; margin: 20px 0;">
+      <div class="card" style="flex: 1; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align:center;">
+        <h2 style="color: #555;">Abertos</h2><p id="abertos" style="font-size: 2rem; color: #007bff;">0</p>
+      </div>
+      <div class="card" style="flex: 1; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align:center;">
+        <h2 style="color: #555;">Em Andamento</h2><p id="andamento" style="font-size: 2rem; color: #ffc107;">0</p>
+      </div>
+      <div class="card" style="flex: 1; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align:center;">
+        <h2 style="color: #555;">Fechados</h2><p id="fechados" style="font-size: 2rem; color: #28a745;">0</p>
+      </div>
+    </div>
+
+    <div class="charts" style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <div style="flex: 1; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin-bottom: 10px;">Chamados por Categoria</h3>
+        <canvas id="categoriaChart"></canvas>
+      </div>
+      <div style="flex: 1; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin-bottom: 10px;">Chamados por Mês</h3>
+        <canvas id="mesChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const dashboardData = {
+      status:{ abertos:12, andamento:7, fechados:25 },
+      categorias:{ "Suporte Técnico":10, "Financeiro":8, "RH":5, "Infraestrutura":7, "Outros":4 },
+      meses:{ Janeiro:5, Fevereiro:8, Março:10, Abril:6, Maio:12, Junho:15 }
+    };
+    document.getElementById('abertos').textContent = dashboardData.status.abertos;
+    document.getElementById('andamento').textContent = dashboardData.status.andamento;
+    document.getElementById('fechados').textContent = dashboardData.status.fechados;
+    new Chart(document.getElementById('categoriaChart').getContext('2d'), {
+      type:'pie', data:{ labels:Object.keys(dashboardData.categorias), datasets:[{ data:Object.values(dashboardData.categorias), backgroundColor:['#007bff','#ffc107','#28a745','#dc3545','#6f42c1'] }] }, options:{ responsive:true }
+    });
+    new Chart(document.getElementById('mesChart').getContext('2d'), {
+      type:'line', data:{ labels:Object.keys(dashboardData.meses), datasets:[{ label:'Chamados', data:Object.values(dashboardData.meses), borderColor:'#007bff', fill:false, tension:0.3 }] }, options:{ responsive:true }
+    });
+  </script>
+  <script src="../js/sidebar.js"></script>
+
+  <script src="../js/core.js"></script>
+  <script src="../js/guard.js"></script>
+</body>
+</html>

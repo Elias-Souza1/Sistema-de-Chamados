@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro - Sistema de Chamados</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/login.css">
+  <link rel="stylesheet" href="../css/register.css">
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1>Criar Conta</h1>
+      <p class="subtitle">Sua conta será criada como <strong>USUÁRIO</strong> por padrão</p>
+
+      <form id="registerForm" autocomplete="on">
+        <div class="form-group">
+          <label for="name">Nome</label>
+          <input type="text" id="name" name="name" placeholder="Seu nome" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="voce@empresa.com" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" name="password" placeholder="Crie uma senha" required>
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top:0.75rem;">Criar conta</button>
+        <div class="error-box" id="errorBox"></div>
+      </form>
+
+      <div class="login-footer">
+        Já tem conta? <a href="./login.html">Entrar</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/core.js"></script>
+  <script src="../js/register.js"></script>
+</body>
+</html>

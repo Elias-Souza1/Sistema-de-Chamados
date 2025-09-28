@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Sistema de Chamados</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1>Bem-vindo</h1>
+      <p class="subtitle">Acesse sua conta para continuar</p>
+
+      <form id="loginForm" autocomplete="on">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="seuemail@empresa.com" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+        <div class="form-actions">
+          <label class="remember">
+            <input type="checkbox" id="remember"> Lembrar e-mail
+          </label>
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top:0.75rem;">Entrar</button>
+        <div class="error-box" id="errorBox"></div>
+      
+</form>
+  <div class="login-footer" style="margin-top:0.75rem;">
+    <a href="./register.html" style="color:#ffcc29; text-decoration:none; font-weight:600;">Criar uma conta</a>
+  </div>
+
+
+      <div class="login-footer">
+        Dica: no protótipo, a senha é <strong>123456</strong> para qualquer e-mail.
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/login.js"></script>
+</body>
+</html>

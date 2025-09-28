@@ -1,0 +1,359 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  color: #fff;
+}
+
+/* ====== SIDEBAR (recolhível com transição suave) ====== */
+:root {
+  --sb-w: 260px; /* largura aberta */
+  --sb-c: 72px; /* largura recolhida (só ícones) */
+  --sb-ease: cubic-bezier(0.22, 0.8, 0.2, 1);
+  --sb-dur: 0.32s; /* fluidez um tiquinho mais devagar */
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sb-c);
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 0;
+  transition: width var(--sb-dur) var(--sb-ease);
+  overflow: hidden;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+  z-index: 9999; /* garante clique mesmo com overlays */
+}
+.sidebar:hover {
+  width: var(--sb-w);
+}
+
+.menu-top a {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.8rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  transition: background 0.3s, color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.menu-top a i {
+  font-size: 1.4rem;
+  min-width: 30px;
+  text-align: center;
+}
+.menu-top a span {
+  opacity: 0;
+  transition: opacity 0.32s var(--sb-ease) 0.06s;
+}
+.sidebar:hover .menu-top a span {
+  opacity: 1;
+}
+.menu-top a.active {
+  background: #ffcc29;
+  color: #222;
+}
+.menu-top a:hover {
+  background: rgba(255, 204, 41, 0.2);
+}
+
+.menu-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.menu-bottom a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  transition: background 0.3s, color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.menu-bottom a i {
+  font-size: 1.3rem;
+  min-width: 30px;
+  text-align: center;
+}
+.menu-bottom a span {
+  opacity: 0;
+  transition: opacity 0.32s var(--sb-ease) 0.06s;
+}
+.sidebar:hover .menu-bottom a span {
+  opacity: 1;
+}
+.menu-bottom a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ====== CONTEÚDO PRINCIPAL ====== */
+.content {
+  position: relative;
+  z-index: 1; /* abaixo da sidebar */
+  margin-left: var(--sb-c);
+  padding: 2rem;
+  width: calc(100% - var(--sb-c));
+  transition: margin-left var(--sb-dur) var(--sb-ease),
+    width var(--sb-dur) var(--sb-ease);
+}
+.sidebar:hover ~ .content {
+  margin-left: var(--sb-w);
+  width: calc(100% - var(--sb-w));
+}
+
+/* Top bar / avatar */
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.user-profile {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.user-profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.user-profile:hover {
+  transform: scale(1.1);
+}
+
+/* Cartões e blocos */
+.main-message {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  max-width: 900px;
+}
+.main-message .welcome-text {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #ffcc29;
+}
+
+/* Formulários comuns (Chamados) */
+.form-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
+}
+.form-container h2 {
+  color: #ffcc29;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+.btn-submit {
+  background: #ffcc29;
+  color: #222;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+}
+.btn-submit:hover {
+  background: #e6b800;
+}
+.success-message {
+  margin-top: 1rem;
+  text-align: center;
+  color: #00ff88;
+  font-weight: 700;
+  display: none;
+}
+
+/* Tabelas comuns (Tickets) */
+.tickets-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+  border-radius: 16px;
+}
+.tickets-container h2 {
+  color: #ffcc29;
+  margin-bottom: 1rem;
+}
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.filters select,
+.filters input {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.filters input::placeholder {
+  color: #ddd;
+}
+.filters select option {
+  color: #222;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+}
+th {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+tr:hover {
+  background: rgba(255, 204, 41, 0.2);
+}
+
+/* Mensagem flutuante (página inicial) */
+:root {
+  --altura-subida: 24vh;
+  --duracao-subida: 1s;
+}
+.mensagem-balao {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%) translateY(40px) scale(1);
+  background: #fff;
+  color: #222;
+  padding: 20px 28px;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  font: 600 20px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  max-width: 550px;
+  text-align: center;
+  z-index: 9999;
+  opacity: 0;
+  animation: subir var(--duracao-subida) ease-out forwards;
+  transition: opacity 0.8s ease-in-out, transform 0.5s ease-in-out;
+}
+.mensagem-balao::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -12px;
+  border-width: 12px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}
+@keyframes subir {
+  0% {
+    transform: translateX(-50%) translateY(40px) scale(1);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(calc(-1 * var(--altura-subida)))
+      scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+    transition: none; /* navegação mobile sem hover */
+  }
+  .menu-top,
+  .menu-bottom {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  .sidebar a span {
+    display: none !important;
+  }
+  .content {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 70px;
+  }
+}
+.sidebar .menu-bottom a[href$="settings.html"]:hover {
+  background: rgba(255, 204, 41, 0.2) !important; /* mesmo hover do menu-top */
+  color: #fff !important;
+}
+.sidebar .menu-bottom a[href$="settings.html"].active {
+  background: #ffcc29 !important; /* mesmo active do menu-top */
+  color: #222 !important;
+}
+.sidebar .menu-bottom a[href$="settings.html"].active i,
+.sidebar .menu-bottom a[href$="settings.html"].active span {
+  color: #222 !important; /* garante ícone/texto escuros como os demais ativos */
+}
